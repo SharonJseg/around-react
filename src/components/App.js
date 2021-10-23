@@ -2,163 +2,129 @@ import '../index.css';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
+import PopupWithForm from './PopupWithForm';
+import ImagePopup from './ImagePopup';
+import { useState } from 'react';
 
 function App() {
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+
+  const handleAvatarClick = () => {
+    setEditAvatarPopupOpen(true);
+  };
+
+  const handleEditProfileClick = () => {
+    setEditProfilePopupOpen(true);
+  };
+
+  const handleAddPlaceClick = () => {
+    setAddPlacePopupOpen(true);
+  };
+
+  const closeAllPopups = () => {
+    setEditAvatarPopupOpen(false);
+    setEditProfilePopupOpen(false);
+    setAddPlacePopupOpen(false);
+  };
+
   return (
-    <div class='page__container'>
+    <div className='page__container'>
       <Header />
-      <Main />
+      <Main
+        onEditAvatarClick={handleAvatarClick}
+        onEditProfileClick={handleEditProfileClick}
+        onAddPlaceClick={handleAddPlaceClick}
+      />
       <Footer />
 
-      <div class='modal modal_type_delete-card'>
-        <div class='modal__container'>
-          <form action='/' name='delete' method='get' class='form' novalidate>
-            <div class='form__fieldset'>
-              <button
-                type='button'
-                aria-label='Close button'
-                class='modal__close-btn'
-              ></button>
-              <h2 class='form__heading form__heading_type_delete-card'>
-                Are you sure?
-              </h2>
-              <button class='form__submit-btn form__submit-btn_type_delete-card'>
-                Yes
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+      <PopupWithForm
+        name='delete-card'
+        title='Are you sure?'
+        titleModifier='form__heading_type_delete-card'
+        submitModifier='form__submit-btn_type_delete-card'
+      />
 
-      <div class='modal modal_type_edit-image'>
-        <div class='modal__container'>
-          <button
-            type='button'
-            aria-label='Close button'
-            class='modal__close-btn'
-          ></button>
-          <form action='/' name='profile' method='get' class='form' novalidate>
-            <fieldset class='form__fieldset'>
-              <legend>
-                <h2 class='form__heading'>Change profile picture</h2>
-              </legend>
-              <input
-                type='url'
-                name='avatar'
-                id='avatar'
-                placeholder='Add image url'
-                class='form__text-input form__text-input_type_avatar'
-                required
-              />
-              <span class='form__validation-error form__validation-error_type_avatar'></span>
-              <button class='form__submit-btn'>Save</button>
-            </fieldset>
-          </form>
-        </div>
-      </div>
+      <PopupWithForm
+        name='edit-image'
+        title='Change profile picture'
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+      >
+        <input
+          type='url'
+          name='avatar'
+          id='avatar'
+          placeholder='Add image url'
+          className='form__text-input form__text-input_type_avatar'
+          required
+        />
+        <span className='form__validation-error form__validation-error_type_avatar'></span>
+      </PopupWithForm>
 
-      <div class='modal modal_type_edit-profile'>
-        <div class='modal__container'>
-          <button
-            type='button'
-            aria-label='Close button'
-            class='modal__close-btn'
-          ></button>
-          <form action='/' name='profile' method='get' class='form' novalidate>
-            <fieldset class='form__fieldset'>
-              <legend>
-                <h2 class='form__heading'>Edit Profile</h2>
-              </legend>
-              <input
-                type='text'
-                name='name'
-                id='name'
-                placeholder='Name'
-                class='form__text-input form__text-input_type_name'
-                minlength='2'
-                maxlength='40'
-                required
-                pattern='.*\S.*'
-              />
-              <span class='form__validation-error form__validation-error_type_name'></span>
-              <input
-                type='text'
-                name='job'
-                id='job'
-                placeholder='Job'
-                class='form__text-input form__text-input_type_job'
-                minlength='2'
-                maxlength='200'
-                required
-                pattern='.*\S.*'
-              />
-              <span class='form__validation-error form__validation-error_type_job'></span>
-              <button class='form__submit-btn'>Save</button>
-            </fieldset>
-          </form>
-        </div>
-      </div>
+      <PopupWithForm
+        name='edit-profile'
+        title='Edit Profile'
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+      >
+        <input
+          type='text'
+          name='name'
+          id='name'
+          placeholder='Name'
+          className='form__text-input form__text-input_type_name'
+          minLength='2'
+          maxLength='40'
+          required
+          pattern='.*\S.*'
+        />
+        <span className='form__validation-error form__validation-error_type_name'></span>
+        <input
+          type='text'
+          name='job'
+          id='job'
+          placeholder='Job'
+          className='form__text-input form__text-input_type_job'
+          minLength='2'
+          maxLength='200'
+          required
+          pattern='.*\S.*'
+        />
+        <span className='form__validation-error form__validation-error_type_job'></span>
+      </PopupWithForm>
 
-      <div class='modal modal_type_add-element'>
-        <div class='modal__container'>
-          <button
-            type='button'
-            aria-label='Close button'
-            class='modal__close-btn'
-          ></button>
-          <form
-            action='/'
-            name='add-card'
-            class='form'
-            id='image-form'
-            novalidate
-          >
-            <fieldset class='form__fieldset'>
-              <legend>
-                <h2 class='form__heading'>New Place</h2>
-              </legend>
-              <input
-                type='text'
-                name='title'
-                id='title'
-                placeholder='Title'
-                class='form__text-input form__text-input_type_title'
-                minlength='1'
-                maxlength='30'
-                required
-                pattern='.*\S.*'
-              />
-              <span class='form__validation-error form__validation-error_type_title'></span>
-              <input
-                type='url'
-                name='url'
-                id='url'
-                placeholder='Image link'
-                class='form__text-input form__text-input_type_url'
-                required
-              />
-              <span class='form__validation-error form__validation-error_type_url'></span>
-              <button class='form__submit-btn'>Save</button>
-            </fieldset>
-          </form>
-        </div>
-      </div>
+      <PopupWithForm
+        name='add-place'
+        title='New Place'
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+      >
+        <input
+          type='text'
+          name='title'
+          id='title'
+          placeholder='Title'
+          className='form__text-input form__text-input_type_title'
+          minLength='1'
+          maxLength='30'
+          required
+          pattern='.*\S.*'
+        />
+        <span className='form__validation-error form__validation-error_type_title'></span>
+        <input
+          type='url'
+          name='url'
+          id='url'
+          placeholder='Image link'
+          className='form__text-input form__text-input_type_url'
+          required
+        />
+        <span className='form__validation-error form__validation-error_type_url'></span>
+      </PopupWithForm>
 
-      <div class='modal modal_type_image'>
-        <div class='modal__container modal__container_image'>
-          <button
-            type='button'
-            aria-label='Close button'
-            class='modal__close-btn'
-          ></button>
-          <img
-            src="<%=require('./images/image_placeholder.jpg')%>"
-            alt=''
-            class='modal__image'
-          />
-          <h2 class='modal__title'></h2>
-        </div>
-      </div>
+      <ImagePopup />
     </div>
   );
 }
