@@ -1,54 +1,14 @@
-import logo from './images/logo.svg';
-import addIcn from './images/add.svg';
-import './index.css';
+import '../index.css';
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
 
 function App() {
   return (
     <div class='page__container'>
-      <header class='header'>
-        <img src={logo} alt='Around the U.S logo' class='logo' />
-      </header>
-      <main>
-        <section class='profile'>
-          <div class='profile__image-container'>
-            <button
-              type='button'
-              aria-label='edit image button'
-              class='profile__image-edit'
-            ></button>
-            <img
-              src="<%=require('./images/profile_image.png')%>"
-              alt='Jacques Cousteau '
-              class='profile__image'
-            />
-          </div>
-          <div class='profile__info'>
-            <div class='profile__info-edit'>
-              <h1 class='profile__name'></h1>
-              <button
-                type='button'
-                aria-label='edit profile button'
-                class='profile__edit-btn'
-              ></button>
-            </div>
-            <p class='profile__job'></p>
-          </div>
-          <button
-            class='profile__add-element-btn'
-            type='button'
-            aria-label='add picture button'
-          >
-            <img class='profile-icon' src={addIcn} alt='add element button' />
-          </button>
-        </section>
-
-        <section class='cards'>
-          <ul class='cards__container'></ul>
-        </section>
-      </main>
-      <footer class='footer'>
-        <p class='footer__copyright'>© 2021 Around The U.S.</p>
-      </footer>
+      <Header />
+      <Main />
+      <Footer />
 
       <div class='modal modal_type_delete-card'>
         <div class='modal__container'>
