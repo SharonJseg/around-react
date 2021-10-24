@@ -17,14 +17,7 @@ const PopupWithForm = (props) => {
           aria-label='Close button'
           className='modal__close-btn'
         />
-        <form
-          onSubmit={handleSubmit}
-          action='/'
-          name={props.name}
-          method='get'
-          className='form'
-          noValidate
-        >
+        <form onSubmit={handleSubmit} name={props.name} className='form'>
           <fieldset className='form__fieldset'>
             <legend>
               {props.titleModifier ? (

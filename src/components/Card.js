@@ -4,7 +4,7 @@ const Card = (props) => {
   };
 
   return (
-    <li onClick={handleClick} className='card__container'>
+    <li className='card__container'>
       <article className='card'>
         <button
           className='card__delete-button'
@@ -12,6 +12,7 @@ const Card = (props) => {
           aria-label='delete image'
         />
         <img
+          onClick={handleClick}
           className='card__image'
           src={props.card.link}
           alt={props.card.name}

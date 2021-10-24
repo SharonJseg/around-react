@@ -20,11 +20,7 @@ const Main = (props) => {
         setCards(cardArray);
       })
       .catch((err) => console.log(err));
-
-    return () => {
-      return;
-    };
-  }, [userName, userDescription, userAvatar, cards]);
+  }, []);
   return (
     <main>
       <section className='profile'>

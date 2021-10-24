@@ -1,7 +1,9 @@
 const ImagePopup = (props) => {
   return (
     <div
-      className={`modal modal_type_image ${props.card ? 'modal_opened' : ''}`}
+      className={`modal modal_type_image ${
+        props.card.name ? 'modal_opened' : ''
+      }`}
     >
       <div className='modal__container modal__container_image'>
         <button
