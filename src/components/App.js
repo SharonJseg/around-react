@@ -10,6 +10,7 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(false);
 
   const handleAvatarClick = () => {
     setEditAvatarPopupOpen(true);
@@ -23,10 +24,15 @@ function App() {
     setAddPlacePopupOpen(true);
   };
 
+  const handleCardClick = (props) => {
+    setSelectedCard(props);
+  };
+
   const closeAllPopups = () => {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
+    setSelectedCard(false);
   };
 
   return (
@@ -36,6 +42,7 @@ function App() {
         onEditAvatarClick={handleAvatarClick}
         onEditProfileClick={handleEditProfileClick}
         onAddPlaceClick={handleAddPlaceClick}
+        onCardClick={handleCardClick}
       />
       <Footer />
 
@@ -124,7 +131,7 @@ function App() {
         <span className='form__validation-error form__validation-error_type_url'></span>
       </PopupWithForm>
 
-      <ImagePopup />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </div>
   );
 }
