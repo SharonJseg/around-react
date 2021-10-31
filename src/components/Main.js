@@ -1,22 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Card from './Card';
 import api from '../utils/api';
 import addIcn from '../images/add.svg';
 import imagePlaceHolder from '../images/profile_image.png';
 
 const Main = (props) => {
-  const [userName, setUserName] = useState();
-  const [userDescription, setUserDescription] = useState();
-  const [userAvatar, setUserAvatar] = useState();
   const [cards, setCards] = useState([]);
+  const currentUser = useContext(CurrentUserContext);
+
+  const handleCardLike = (card) => {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+      setCards((cards) => cards.map((c) => (c._id === card._id ? newCard : c)));
+    });
+  };
 
   useEffect(() => {
     api
-      .getAllInfo()
-      .then(([cardArray, userInfo]) => {
-        setUserName(userInfo.name);
-        setUserDescription(userInfo.about);
-        setUserAvatar(userInfo.avatar);
+      .getInitialCards()
+      .then((cardArray) => {
         setCards(cardArray);
       })
       .catch((err) => console.log(err));
@@ -33,14 +36,14 @@ const Main = (props) => {
           />
 
           <img
-            src={userAvatar ? userAvatar : imagePlaceHolder}
+            src={currentUser.avatar ? currentUser.avatar : imagePlaceHolder}
             alt='Jacques Cousteau '
             className='profile__image'
           />
         </div>
         <div className='profile__info'>
           <div className='profile__info-edit'>
-            <h1 className='profile__name'>{userName}</h1>
+            <h1 className='profile__name'>{currentUser.name}</h1>
             <button
               onClick={props.onEditProfileClick}
               type='button'
@@ -48,7 +51,7 @@ const Main = (props) => {
               className='profile__edit-btn'
             />
           </div>
-          <p className='profile__job'>{userDescription}</p>
+          <p className='profile__job'>{currentUser.about}</p>
         </div>
         <button
           onClick={props.onAddPlaceClick}
@@ -67,6 +70,7 @@ const Main = (props) => {
               key={cardElement._id}
               card={cardElement}
               onCardClick={props.onCardClick}
+              onCardLike={handleCardLike}
             />
           ))}
         </ul>
