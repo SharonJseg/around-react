@@ -3,13 +3,13 @@ import { useState, useEffect, useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 const EditProfilePopup = (props) => {
+  const [description, setDescription] = useState('');
+  const [name, setName] = useState('');
   const currentUser = useContext(CurrentUserContext);
-  const [description, setDescription] = useState();
-  const [name, setName] = useState();
 
   useEffect(() => {
-    setName(currentUser && currentUser.name);
-    setDescription(currentUser && currentUser.about);
+    setName(currentUser.name);
+    setDescription(currentUser.about);
   }, [currentUser]);
 
   const handleNameChange = (evt) => {
@@ -37,6 +37,7 @@ const EditProfilePopup = (props) => {
       onSubmit={handleSubmit}
     >
       <input
+        value={name || ''}
         onChange={handleNameChange}
         type='text'
         name='name'
@@ -50,6 +51,7 @@ const EditProfilePopup = (props) => {
       />
       <span className='form__validation-error form__validation-error_type_name'></span>
       <input
+        value={description || ''}
         onChange={handleDescriptionChange}
         type='text'
         name='job'

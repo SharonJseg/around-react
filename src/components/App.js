@@ -118,7 +118,6 @@ function App() {
       })
       .catch((err) => console.log(err));
   };
-
   return (
     <div className='page__container'>
       <Header />
@@ -132,36 +131,36 @@ function App() {
           onCardLike={handleCardLike}
           onCardDelete={handleDeleteCard}
         />
+        <Footer />
+
+        <PopupWithForm
+          name='delete-card'
+          title='Are you sure?'
+          titleModifier='form__heading_type_delete-card'
+          submitModifier='form__submit-btn_type_delete-card'
+        />
+
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
+
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlaceSubmit={handleAddPlaceSubmit}
+        />
+
+        {selectedCard && (
+          <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        )}
       </CurrentUserContext.Provider>
-      <Footer />
-
-      <PopupWithForm
-        name='delete-card'
-        title='Are you sure?'
-        titleModifier='form__heading_type_delete-card'
-        submitModifier='form__submit-btn_type_delete-card'
-      />
-
-      <EditAvatarPopup
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-        onUpdateAvatar={handleUpdateAvatar}
-      />
-      <EditProfilePopup
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-        onUpdateUser={handleUpdateUser}
-      />
-
-      <AddPlacePopup
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-        onAddPlaceSubmit={handleAddPlaceSubmit}
-      />
-
-      {selectedCard && (
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-      )}
     </div>
   );
 }
