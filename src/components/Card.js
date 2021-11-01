@@ -10,9 +10,14 @@ const Card = (props) => {
     props.onCardLike(props.card);
   };
 
+  const handleDeleteClick = () => {
+    props.onCardDelete(props.card);
+  };
+
   const currentUser = useContext(CurrentUserContext);
   const isOwn = props.card.owner._id === currentUser._id;
   const isLiked = props.card.likes.some((i) => i._id === currentUser._id);
+
   const cardDeleteButtonClassName = `card__delete-button ${
     isOwn ? '' : 'card__delete-button_hidden'
   }`;
@@ -24,6 +29,7 @@ const Card = (props) => {
     <li className='card__container'>
       <article className='card'>
         <button
+          onClick={handleDeleteClick}
           className={cardDeleteButtonClassName}
           type='button'
           aria-label='delete image'

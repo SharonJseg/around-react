@@ -30,23 +30,23 @@ class API {
   }
 
   updateUserInfo(userInfo) {
-    const { name, job } = userInfo;
+    const { name, about } = userInfo;
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         name,
-        about: job,
+        about,
       }),
     }).then(this._handleResponse);
   }
 
-  updateUserImage(link) {
+  updateUserImage(avatar) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: link,
+        avatar,
       }),
     }).then(this._handleResponse);
   }

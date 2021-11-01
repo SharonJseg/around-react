@@ -1,29 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Card from './Card';
-import api from '../utils/api';
 import addIcn from '../images/add.svg';
 import imagePlaceHolder from '../images/profile_image.png';
 
 const Main = (props) => {
-  const [cards, setCards] = useState([]);
   const currentUser = useContext(CurrentUserContext);
 
-  const handleCardLike = (card) => {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      setCards((cards) => cards.map((c) => (c._id === card._id ? newCard : c)));
-    });
-  };
-
-  useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cardArray) => {
-        setCards(cardArray);
-      })
-      .catch((err) => console.log(err));
-  }, []);
   return (
     <main>
       <section className='profile'>
@@ -34,7 +17,6 @@ const Main = (props) => {
             aria-label='edit image button'
             className='profile__image-edit'
           />
-
           <img
             src={currentUser.avatar ? currentUser.avatar : imagePlaceHolder}
             alt='Jacques Cousteau '
@@ -65,12 +47,13 @@ const Main = (props) => {
 
       <section className='cards'>
         <ul className='cards__container'>
-          {cards.map((cardElement) => (
+          {props.cards.map((cardElement) => (
             <Card
               key={cardElement._id}
               card={cardElement}
               onCardClick={props.onCardClick}
-              onCardLike={handleCardLike}
+              onCardLike={props.onCardLike}
+              onCardDelete={props.onCardDelete}
             />
           ))}
         </ul>
