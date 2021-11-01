@@ -78,7 +78,7 @@ class API {
   }
 }
 
-const api = new API({
+const Api = new API({
   url: 'https://around.nomoreparties.co/v1/group-12',
   headers: {
     authorization: '9dab4619-413b-4914-b4f4-ee6c3c0ed983',
@@ -86,4 +86,4 @@ const api = new API({
   },
 });
 
-export default api;
+export default Api;
